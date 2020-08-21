@@ -2,9 +2,9 @@
     <div class="star">
         <van-nav-bar
 
-                left-text="我的收藏"
+                left-text="美食"
                 left-arrow
-                @click-left="$router.push('/center')"
+                @click-left="$router.push('/')"
         />
 
         <div class="starList">

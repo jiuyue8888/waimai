@@ -54,8 +54,8 @@
 
         <!-- 附近商家 到店自取 -->
         <van-tabs v-model="active" sticky>
-            <van-tab v-for="(item,index) in items" :title="item" title-style="titleList">
-                <vCard :data="data" :type="active"></vCard>
+            <van-tab v-for="(item,index) in items" :key="index" :title="item" title-style="titleList">
+                <vCard :data="data" :type="type"></vCard>
             </van-tab>
         </van-tabs>
 
@@ -77,6 +77,7 @@
         data() {
             return {
                 active:0,
+                type:'0',
                 lon: '',//经度
                 lat: '',//纬度
                 selectName: '',//商铺搜索名称

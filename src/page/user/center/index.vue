@@ -12,7 +12,7 @@
             <van-icon name="setting-o" class="setting" @click="$router.push('/setting')"/>
         </div>
         <div class="part1">
-            <van-cell title="我的订单" is-link value="查看全部订单" to="/index"/>
+            <van-cell title="我的订单" is-link value="查看全部订单" to="/orderList"/>
             <van-grid :border="false">
                 <van-grid-item icon="pending-payment" text="待付款" />
                 <van-grid-item icon="logistics" text="待使用" />
@@ -23,11 +23,11 @@
         <div class="part2">
             <van-grid :border="false" :column-num="3">
                 <van-grid-item icon="coupon" text="优惠券" @click="$router.push('/coupon')"/>
-                <van-grid-item icon="star" text="我的收藏" />
-                <van-grid-item icon="map-marked" text="我的地址" />
-                <van-grid-item icon="friends" text="骑手招募" />
-                <van-grid-item icon="bell" text="点餐提醒" />
-                <van-grid-item icon="shop-collect" text="加盟代理" />
+                <van-grid-item icon="star" text="我的收藏" @click="$router.push('/star')"/>
+                <van-grid-item icon="map-marked" text="我的地址" @click="$router.push('/address')"/>
+                <van-grid-item icon="friends" text="骑手招募" @click="$router.push('/qishouJoin')"/>
+                <van-grid-item icon="bell" text="点餐提醒" @click="$router.push('/remind')"/>
+                <van-grid-item icon="shop-collect" text="加盟代理" @click="$router.push('/join')"/>
             </van-grid>
         </div>
 		<vTabBar :active="3"/>

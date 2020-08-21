@@ -26,6 +26,9 @@ export default {
     max-width: 100%;
     vertical-align: top;
   }
+  .van-card{
+    background: transparent;
+  }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
