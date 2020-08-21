@@ -1,288 +1,275 @@
 <template>
-	<div>
-		<div class="head-box">
-			<div class="navbar"></div>
-			<div class="container">
-				<div class="right" :style="'padding-right: ' + MPPR + 'px'">
-					<div class="address-box">
-						<van-icon name="location" color="rgb(0, 122, 255)"/>
-						<span>正在获取位置...</span>
-					</div>
-				</div>
-				<div class="left">
-					<div class="search-box" :class="{'QZBG':GDHEAD}" :style="GDHEAD ? 'padding-right: ' + MPPR + 'px' : ''">
-						<div class="ctn">
-							<div class="hx-search-box" @click="goSearch">
-								<span>奶茶</span>
+    <div class="home">
+        <div class="head-box">
+            <div class="container">
+                <div class="address-box">
+                    <van-icon name="location" color="rgb(0, 122, 255)"/>
+                    <span>正在获取位置正在获取位置</span>
+                </div>
+                <van-search v-model="selectName" placeholder="请输入搜索关键词"/>
+            </div>
+        </div>
+        <div class="container menu-box">
 
-							</div>
-						</div>
-					</div>
-				</div>
 
-			</div>
-		</div>
-		<mescroll-body ref="mescrollRef" :down="downOption" @up="upCallback">
-			<view class="container menu-box">
-				<view class="item-box" v-for="(item,i) in menuList" :key="i">
-					<image :src="item.img" mode=""></image>
-					<view class="tit">
-						<text>{{item.tit}}</text>
-					</view>
-				</view>
-			</view>
-			<view class="container menu-box">
-				<view class="item-box" v-for="(item,i) in secondMenuList" :key="i">
-					<image :src="item.img" mode=""></image>
-					<view class="tit">
-						<text>{{item.tit}}</text>
-					</view>
-				</view>
-			</view>
-			<!-- 轮播图 -->
-			<view class=" bannerimg-box">
-				<swiper circular duration="400" interval="10000" autoplay>
-					<swiper-item class="swiper-item bannerImg" v-for="(item,index) in bannerData" :key="index">
-						<!-- 图片尺寸为 750*250 -->
-						<image :src="item.src" class="loaded" mode="widthFix"></image>
-					</swiper-item>
-				</swiper>
-			</view>
-			<!-- 优惠专区 -->
-			<view class="container margin-top sort-box">
-				<view class="item-box">
-					<text class="tit">优惠专区</text>
-				</view>
-				<view class="store-box">
-					<view class="imgcls">
-						<image src="../../static/img/b1.jpg"></image>
-						<view class="imgtitle">
-							披萨来了
-						</view>
-						<view class="content">
-							根据您看过的店推荐
-						</view>
-					</view>
-					<view class="imgcls">
-						<image src="../../static/img/b1.jpg"></image>
-						<view class="imgtitle">
-							披萨来了
-						</view>
-						<view class="content">
-							根据您看过的店推荐
-						</view>
-					</view>
+            <div class="item-box" v-for="(item,i) in menuList" :key="i">
+                <img src="@/static/img/index/cs.png"/>
+                <div class="tit">
+                    <span>{{item.tit}}</span>
+                </div>
+            </div>
+        </div>
 
-				</view>
-				<view class="store-box">
-					<view class="imgcls">
-						<image src="../../static/img/b1.jpg"></image>
-						<view class="imgtitle">
-							披萨来了
-						</view>
-						<view class="content">
-							根据您看过的店推荐
-						</view>
-					</view>
-					<view class="imgcls">
-						<image src="../../static/img/b1.jpg"></image>
-						<view class="imgtitle">
-							披萨来了
-						</view>
-						<view class="content">
-							根据您看过的店推荐
-						</view>
-					</view>
-				</view>
-			</view>
-			<!-- 去发现 -->
-			<view class="faxian">
-				<view class="btn-find">
-					去发现
-				</view>
-			</view>
-			<view class="youhui clearfix">
-				<view class="youhui-item">
-					<view class="item-left">
-						<text class="left-item">减配送费</text>
-						<text class="left-bottom">配送费0元起</text>
-					</view>
-					<view class="item-right">
+        <!-- 轮播图 -->
+        <div class=" bannerimg-box">
+            <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
+                <van-swipe-item v-for="(item,index) in bannerData" :key="index">
+                    <img :src="item.src" class="loaded"/>
+                </van-swipe-item>
+            </van-swipe>
 
-					</view>
-				</view>
-				<view class="youhui-item">
-					<view class="item-left">
-						<text class="left-item">减配送费</text>
-						<text class="left-bottom">配送费0元起</text>
-					</view>
-				</view>
-				<view class="youhui-item">
-					<view class="item-left">
-						<text class="left-item">减配送费</text>
-						<text class="left-bottom">配送费0元起</text>
-					</view>
-				</view>
-				<view class="youhui-item">
-					<view class="item-left">
-						<text class="left-item">减配送费</text>
-						<text class="left-bottom">配送费0元起</text>
-					</view>
-				</view>
-			</view>
-			<!-- 附近商家 到店自取 -->
-			<view class="content">
-				<view style="margin-top: 20upx;">
-					<zzx-tabs :items="items" :current="current" @clickItem="onClickItem" ref="mytabs">
-					</zzx-tabs>
-				</view>
-				<view style="margin-top: 20upx;margin-left: 40upx;color:#999999;font-size: 30upx;height: auto;">
-					<view v-show="current === 0">
-						<!-- 欠缺一个筛选功能 -->
-						<view class=" store-box" v-if="storeList">
-							<view class=" item-box" v-for="(store,i) in storeList" :key="i">
-								<view class="container top-box">
-									<view class="left">
-										<image :src="store.avatar" mode="aspectFill"></image>
-									</view>
-									<view class="right" >
-										<text class="tit">{{store.name}}（{{store.community}}）</text>
-										<view class="row justify-content">
-											<view class="row-left">
-												<i class="hxicon-favorfill "></i>
-												<text class="t1">{{store.mark}}</text>
-												<text class="t2">月售{{store.monthly_sales}}</text>
-											</view>
-											<view class="row-right">
-												<text>30分钟</text>
-											</view>
-											<view class="row-right">
-												<text>{{store.distance}}米</text>
-											</view>
-										</view>
-										<view class="row">
-											<text>起送￥{{store.starting_price}}</text>
-											<text class="t2" v-if="store.shipping_dees > 0">配送￥{{store.shipping_dees}} </text>
-											<text class="t2" v-else>免费配送</text>
-										</view>
-									</view>
-								</view>
-							</view>
-						</view>
-					</view>
-					<view v-show="current === 1">
-						到店自取
-					</view>
-				</view>
-			</view>
-		</mescroll-body>
-		<div class="footzw"></div>
-	</div>
+        </div>
+        <!-- 优惠专区 -->
+        <div class="container margin-top sort-box">
+            <div class="item-box">
+                <span class="tit">优惠专区</span>
+            </div>
+            <div class="store-box">
+                <div class="imgcls" v-for="(item,id) in dptjList" :key="id">
+                    <img src="../../static/img/b1.jpg"/>
+                    <div class="imgtitle"><img src="../../static/img/index/cs.png">
+                        <span>{{item.name}}</span></div>
+                    <div class="content">{{item.text}}</div>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- 去发现 -->
+        <div class="faxian">
+            <div class="btn-find">
+                去发现
+            </div>
+        </div>
+
+        <!-- 附近商家 到店自取 -->
+        <van-tabs v-model="active" sticky>
+            <van-tab v-for="(item,index) in items" :title="item" title-style="titleList">
+                <vCard :data="data" :type="active"></vCard>
+            </van-tab>
+        </van-tabs>
+
+        <vTabBar :active="0"></vTabBar>
+
+    </div>
 </template>
 <script>
-	
-	//引入测试数据
-	
-	export default {
-		components: {
-			
-		},
-		data() {
-			return {
-				defaultSelected:[],
-				items: ['附近商家', '到店自取'],
-				filterData:[{"name":"综合排序","value":"综合排序"},{"name":"距离最近","value":"距离最近"}],
-				current: 0,
-				MPPR: 0,
-				GDHEAD: 0,
-				//显示没有更多商户
-				showFoot: 0,
-				downOption: {
-					auto: false //是否在初始化后,自动执行downCallback; 默认true
-				},
-				menuList: [
 
-					{
-						img: '/static/img/index/cs.png',
-						tit: '美食'
-					},
-					{
-						img: '/static/img/index/sc.png',
-						tit: '同城闪购'
-					},
-					{
-						img: '/static/img/index/sg.png',
-						tit: '生鲜蔬果'
-					},
-					{
-						img: '/static/img/index/xh.png',
-						tit: '鲜花蛋糕'
-					},
-					{
-						img: '/static/img/index/yd.png',
-						tit: '跑腿代购'
-					},
+    import card from '@/components/card/index.vue';
+    import tabBar from '@/components/tabBar/index.vue';
+    import {getClassifyList, getBannerList, getMainGoodsList, getShopStoreList} from '@/server/index';
 
-				],
-				secondMenuList: [
+    export default {
+        components: {
+            'vCard':card,
+            'vTabBar':tabBar
+        },
+        data() {
+            return {
+                active:0,
+                lon: '',//经度
+                lat: '',//纬度
+                selectName: '',//商铺搜索名称
+                defaultSelected: [],
+                items: ['附近商家', '到店自取', '0元派送'],
+                filterData: [{"name": "综合排序", "value": "综合排序"}, {"name": "距离最近", "value": "距离最近"}],
+                current: 0,
+                MPPR: 0,
+                GDHEAD: 0,
+                //显示没有更多商户
+                showFoot: 0,
+                downOption: {
+                    auto: false //是否在初始化后,自动执行downCallback; 默认true
+                },
 
-					{
-						img: '/static/img/index/cs.png',
-						tit: '甜点饮品'
-					},
-					{
-						img: '/static/img/index/sc.png',
-						tit: '汉堡快餐'
-					},
-					{
-						img: '/static/img/index/sg.png',
-						tit: '火锅外卖'
-					},
-					{
-						img: '/static/img/index/xh.png',
-						tit: '到店自取'
-					},
-					{
-						img: '/static/img/index/yd.png',
-						tit: '全部分类'
-					},
+                //导航列表
+                menuList: [
 
-				],
-				storeList: [],
-				bannerData: [{
-						page: '/pages/product/product?id=457',
-						src: '//imgs.1op.cn/i/hxshop/banner/banner.jpg'
-					},
-					{
-						page: '/pages/product/product?id=57',
-						src: '//imgs.1op.cn/i/hxshop/banner/banner.jpg'
-					},
-					{
-						page: '/pages/product/product?id=95',
-						src: '//imgs.1op.cn/i/hxshop/banner/banner.jpg'
-					},
-					{
-						page: '/pages/product/product?id=45',
-						src: '//imgs.1op.cn/i/hxshop/banner/banner.jpg'
-					}
-				],
+                    {
+                        img: '@/static/img/index/cs.png',
+                        tit: '美食'
+                    },
+                    {
+                        img: '@/static/img/index/sc.png',
+                        tit: '同城闪购'
+                    },
+                    {
+                        img: '/static/img/index/sg.png',
+                        tit: '生鲜蔬果'
+                    },
+                    {
+                        img: '/static/img/index/xh.png',
+                        tit: '鲜花蛋糕'
+                    },
+                    {
+                        img: '/static/img/index/yd.png',
+                        tit: '跑腿代购'
+                    },
+                    {
+                        img: '@/static/img/index/cs.png',
+                        tit: '美食'
+                    },
+                    {
+                        img: '@/static/img/index/sc.png',
+                        tit: '同城闪购'
+                    },
 
-			}
-		},
-		onLoad() {
-			let that = this;
-			
-		},
-		mounted() {
-			let that = this;
+                ],
 
-		},
-		methods: {
-			
-		}
-	}
+                //店铺推荐
+                dptjList: [
+                    {
+                        img: '',
+                        icon: '',
+                        name: '披萨来了',
+                        text: '根据您看过的店推荐'
+                    }, {
+                        img: '',
+                        icon: '',
+                        name: '披萨来了',
+                        text: '根据您看过的店推荐'
+                    }, {
+                        img: '',
+                        icon: '',
+                        name: '披萨来了',
+                        text: '根据您看过的店推荐'
+                    }, {
+                        img: '',
+                        icon: '',
+                        name: '披萨来了',
+                        text: '根据您看过的店推荐'
+                    }
+                ],
+
+                //附近商家
+                fjsjList: [
+                    {
+                        img:'',
+                        title:''
+                    },{
+                        img:'',
+                        title:''
+                    },{
+                        img:'',
+                        title:''
+                    }
+                ],
+                //到店自取
+                ddzqList: [
+                    {
+                        img:'',
+                        title:''
+                    },{
+                        img:'',
+                        title:''
+                    },{
+                        img:'',
+                        title:''
+                    }
+                ],
+                //0元派送
+                lypsList: [
+                    {
+                        img:'',
+                        title:''
+                    },{
+                        img:'',
+                        title:''
+                    },{
+                        img:'',
+                        title:''
+                    }
+                ],
+                data:[],//商家列表
+
+                //轮播图
+                bannerData: [
+                    {
+                        page: '/pages/product/product?id=457',
+                        src: '//imgs.1op.cn/i/hxshop/banner/banner.jpg'
+                    },
+                    {
+                        page: '/pages/product/product?id=57',
+                        src: '//imgs.1op.cn/i/hxshop/banner/banner.jpg'
+                    },
+                    {
+                        page: '/pages/product/product?id=95',
+                        src: '//imgs.1op.cn/i/hxshop/banner/banner.jpg'
+                    },
+                    {
+                        page: '/pages/product/product?id=45',
+                        src: '//imgs.1op.cn/i/hxshop/banner/banner.jpg'
+                    }
+                ],
+
+            }
+        },
+        onLoad() {
+            let that = this;
+
+        },
+        mounted() {
+            let that = this;
+            this.init();
+        },
+        methods: {
+            init() {
+                console.log(223)
+                this.data = this.fjsjList;
+                //获取导航
+                getClassifyList({}).then(res => {
+                })
+                //获取优惠专区店铺
+                getShopStoreList({}).then(res => {
+                })
+
+                //获取周边商铺
+                getMainGoodsList({
+                    lon: this.lon,
+                    lat: this.lat,
+                    selectName: this.selectName
+                }).then(res => {
+                })
+
+                //获取轮播
+                getBannerList({type: 1}).then(res => {
+
+                })
+            },
+            onClickItem(e) {
+                if (this.current !== e.currentIndex) {
+                    this.current = e.currentIndex;
+                }
+            },
+            upCallback(page) {
+                let that = this;
+                //加载门店数据
+                that.storeList = testData.storeList;
+                //无更多商家
+                that.showFoot = true;
+                //隐藏加载
+                that.mescroll.endSuccess(10);
+            },
+            //搜索
+            goSearch() {
+                uni.navigateTo({
+                    url: '/pages/search/search?type=home'
+                })
+            }
+        }
+    }
 </script>
 
 <style lang="less">
-	@import './index.less';
+    @import './index.less';
 </style>
