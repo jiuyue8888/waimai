@@ -1,13 +1,15 @@
 <template>
     <div class="card">
-        <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+
+        <van-pull-refresh v-model="refreshing" @refresh="onRefresh" v-show="type==0">
             <van-list
                     v-model="loading"
                     :finished="finished"
                     finished-text="没有更多了"
                     @load="onLoad"
             >
-                <div class="card-list" v-for="(item,id) in list" :key="id">
+                <div class="card-list" v-for="(item,id) in list" :key="id"
+                @click="$router.push('/storeDetail')">
                     <van-card
                             title="星巴克咖啡"
                             thumb="//imgs.1op.cn/i/hxshop/banner/banner.jpg"
@@ -34,6 +36,40 @@
                 </div>
             </van-list>
         </van-pull-refresh>
+        <div v-show="type!==0">
+            <div class="card-list" >
+                <van-card
+                        title="星巴克咖啡"
+                        thumb="//imgs.1op.cn/i/hxshop/banner/banner.jpg"
+                >
+
+                    <template #tags>
+                        <div class="c1">
+                            <p>
+                                <span class="yello"><van-icon name="star" />4.6</span>
+                                <span>月售354</span>
+                            </p>
+                            <p>
+                                <span>30分钟</span>
+                                <span>693米</span>
+                            </p>
+                        </div>
+                        <div class="c2">0元起送 免费配送</div>
+                        <div class="c3">
+                            <van-tag plain type="danger">35减2</van-tag>
+                            <van-tag plain type="danger">35减2</van-tag>
+                        </div>
+                    </template>
+                </van-card>
+            </div>
+            <ul class="flist">
+                <li v-for="(item,id) in 3" :key="id">
+                    <img src="../../img/user-bg.jpg">
+                    <p>瑞士卷</p>
+                    <span>$33.9</span>
+                </li>
+            </ul>
+        </div>
 
 
     </div>

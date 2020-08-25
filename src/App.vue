@@ -29,6 +29,9 @@ export default {
   .van-card{
     background: transparent;
   }
+  .van-tabs__line{
+    background: #2b7ff1;
+  }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

@@ -1,0 +1,62 @@
+<template>
+    <div class="kvList">
+        <van-nav-bar
+                left-text="美食排行榜"
+                left-arrow
+                @click-left="$router.push('/')"
+        />
+        <img src="../../img/toptu.jpg">
+        <div class="kv-list">
+            <vCard1 :data="data" :type="1"></vCard1>
+        </div>
+
+
+    </div>
+</template>
+<script>
+    import card1 from '@/components/card1/index.vue';
+    import {Toast} from 'vant';
+
+    export default {
+        components: {
+            'vCard1': card1,
+        },
+        data() {
+            return {
+                tab: ['推荐', '美食', '旅行', '购物'],
+                data: [
+                    {
+                        img: '',
+                        title: '这里是名文案描述这里是名文案描述这里是名文案描述'
+                    }, {
+                        img: '',
+                        title: '这里是名文案描述这里是名文案描述这里是名文案描述这里是名文案描述这里是名文案描述这里是名文案描述'
+                    }, {
+                        img: '',
+                        title: '这里是名文案描述这里是名文案'
+                    }, {
+                        img: '',
+                        title: '这里是名文案描述这里是名这里是名文案描述这里是名文案文案'
+                    }
+                ],
+            }
+        },
+        onLoad() {
+
+
+        },
+        onReady() {
+
+        },
+        onShow() {
+
+
+        },
+
+        methods: {}
+    }
+</script>
+<style lang='less'>
+    @import "index.less";
+
+</style>

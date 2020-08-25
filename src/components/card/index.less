@@ -1,36 +1,76 @@
-.card{
-.card-list{
+.card {
   position: relative;
-  width: 100%;
-  overflow: hidden;
-  margin-bottom: 0.3rem;
-  .van-card{
-    padding: 0;
-    font-size: 0.28rem;
-  }
-  .van-card__header{
-    align-items: center;
-  }
-  .yello{
-    color: #ea9518;
-  }
-  .c1{
-    margin: 0.1rem 0;
-  }
-  .c1 p,.c1{
+
+  .card-list {
     position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 0.3rem;
+
+    .van-card {
+      padding: 0;
+      font-size: 0.28rem;
+    }
+
+    .van-card__header {
+      align-items: center;
+    }
+
+    .yello {
+      color: #ea9518;
+    }
+
+    .c1 {
+      margin: 0.1rem 0;
+    }
+
+    .c1 p, .c1 {
+      position: relative;
+      display: flex;
+      font-size: 0.2rem;
+      color: #999;
+      justify-content: space-between;
+
+      span {
+        margin-right: 10px;
+      }
+    }
+
+    .c1 p {
+      &:nth-last-child(1) {
+        text-align: right;
+      }
+    }
+  }
+
+  .flist {
     display: flex;
-    font-size: 0.2rem;
-    color: #999;
+    width: 100%;
     justify-content: space-between;
-    span{
-      margin-right: 10px;
+
+    li {
+      width: 31%;
+      border: 1px solid #ccc;
+      border-radius: 0.1rem;
+      overflow: hidden;
+
+      p {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 0.1rem 0.1rem 0;
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      span {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 0 0.1rem 0.1rem;
+        color: #FF5722;
+      }
     }
   }
-  .c1 p{
-    &:nth-last-child(1){
-      text-align: right;
-    }
-  }
-}
 }

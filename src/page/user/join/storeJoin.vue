@@ -25,15 +25,28 @@
                     label="经营品类"
                     @click="showPicker = true"
             />
-            <van-field name="uploader" label="门脸照">
+            <van-field name="uploader" class="tips-text" label="门脸照" error-message="建议拍摄营业中的商户门店；照片须清晰
+，无黑、白、彩色边框；需拍全，包含完
+整的牌匾">
                 <template #input>
                     <van-uploader v-model="uploader" />
 
                 </template>
             </van-field>
-            <span>建议拍摄营业中的商户门店；照片须清晰
-，无黑、白、彩色边框；需拍全，包含完
-整的牌匾</span>
+            <van-field name="uploader" class="tips-text" label="店内照" error-message="真实提供食堂区域">
+                <template #input>
+                    <van-uploader v-model="uploader" />
+
+                </template>
+            </van-field>
+            <van-field name="uploader" class="tips-text" label="门店LOGO" error-message="图片需与商家实际经营相关">
+                <template #input>
+                    <van-uploader v-model="uploader" />
+
+                </template>
+            </van-field>
+
+
             <van-field
                     v-model="username"
                     label="外卖电话"
@@ -44,6 +57,12 @@
                     label="联系人电话"
                     :rules="[{ required: true, message: '请填写线下店铺牌匾名' }]"
             />
+            <van-field name="uploader" class="tips-text" label="资质证照" error-message="图片需与商家实际资质证照相关">
+                <template #input>
+                    <van-uploader v-model="uploader" />
+
+                </template>
+            </van-field>
             <van-field
                     v-model="username"
                     label="开店人姓名"

@@ -7,7 +7,8 @@
                     这是昵称
                     <br>  <van-icon name="diamond" />超级会员
                 </p>
-                <p v-else><span>登陆／</span><span>注册</span></p>
+                <p v-else><span @click="$router.push('/login')">登陆／</span>
+                    <span @click="$router.push('/login')">注册</span></p>
             </div>
             <van-icon name="setting-o" class="setting" @click="$router.push('/setting')"/>
         </div>
@@ -15,9 +16,9 @@
             <van-cell title="我的订单" is-link value="查看全部订单" to="/orderList"/>
             <van-grid :border="false">
                 <van-grid-item icon="pending-payment" text="待付款" />
-                <van-grid-item icon="logistics" text="待使用" />
-                <van-grid-item icon="records" text="评价" />
-                <van-grid-item icon="refund-o" text="售后／退货" />
+                <van-grid-item icon="logistics" text="待收货" />
+                <van-grid-item icon="records" text="待评价" />
+                <van-grid-item icon="refund-o" text="全部订单" />
             </van-grid>
         </div>
         <div class="part2">

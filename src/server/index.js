@@ -2,9 +2,12 @@ import axios from 'axios';
 const url = 'http://ap.suda60.com/';
 
 const postData=(_url,data)=>{
+
     return axios.get(`${url}${_url}`,{
         params:data
     }).then(res=>res.data);
+
+
 }
 //获取导航信息
 export const getClassifyList=data=>postData(`getClassifyList`,data);

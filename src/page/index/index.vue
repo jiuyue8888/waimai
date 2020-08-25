@@ -6,13 +6,13 @@
                     <van-icon name="location" color="rgb(0, 122, 255)"/>
                     <span>正在获取位置正在获取位置</span>
                 </div>
-                <van-search v-model="selectName" placeholder="请输入搜索关键词"/>
+                <van-search v-model="selectName" shape="round" placeholder="请输入搜索关键词"/>
             </div>
         </div>
         <div class="container menu-box">
 
 
-            <div class="item-box" v-for="(item,i) in menuList" :key="i">
+            <div class="item-box" v-for="(item,i) in menuList" :key="i" @click="$router.push('/storeList')">
                 <img src="@/static/img/index/cs.png"/>
                 <div class="tit">
                     <span>{{item.tit}}</span>
@@ -47,15 +47,28 @@
         </div>
         <!-- 去发现 -->
         <div class="faxian">
-            <div class="btn-find">
+            <div class="btn-find" @click="$router.push('/faxian')">
                 去发现
             </div>
         </div>
+        <ul class="homeKv">
+            <li @click="$router.push('/kvList')"><img src="../../img/t1.jpg"></li>
+            <li @click="$router.push('/kvList')"><img src="../../img/t2.jpg"></li>
+            <li @click="$router.push('/kvList')"><img src="../../img/t3.jpg"></li>
+            <li @click="$router.push('/kvList')"><img src="../../img/t4.jpg"></li>
+        </ul>
 
         <!-- 附近商家 到店自取 -->
         <van-tabs v-model="active" sticky>
             <van-tab v-for="(item,index) in items" :key="index" :title="item" title-style="titleList">
-                <vCard :data="data" :type="type"></vCard>
+                <van-dropdown-menu active-color="#1989fa">
+                    <van-dropdown-item v-model="value1" :options="option1" />
+                    <van-dropdown-item v-model="value2" :options="option2" />
+                    <van-dropdown-item v-model="value2" :options="option2" />
+                    <van-dropdown-item v-model="value2" :options="option2" />
+                </van-dropdown-menu>
+
+                <vCard :data="data" :type="0"></vCard>
             </van-tab>
         </van-tabs>
 
@@ -81,17 +94,19 @@
                 lon: '',//经度
                 lat: '',//纬度
                 selectName: '',//商铺搜索名称
-                defaultSelected: [],
                 items: ['附近商家', '到店自取', '0元派送'],
-                filterData: [{"name": "综合排序", "value": "综合排序"}, {"name": "距离最近", "value": "距离最近"}],
-                current: 0,
-                MPPR: 0,
-                GDHEAD: 0,
-                //显示没有更多商户
-                showFoot: 0,
-                downOption: {
-                    auto: false //是否在初始化后,自动执行downCallback; 默认true
-                },
+                value1: 0,
+                value2: 'a',
+                option1: [
+                    { text: '全部商品', value: 0 },
+                    { text: '新款商品', value: 1 },
+                    { text: '活动商品', value: 2 },
+                ],
+                option2: [
+                    { text: '默认排序', value: 'a' },
+                    { text: '好评排序', value: 'b' },
+                    { text: '销量排序', value: 'c' },
+                ],
 
                 //导航列表
                 menuList: [
@@ -221,6 +236,23 @@
         },
         mounted() {
             let that = this;
+            if(navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    //locationSuccess 获取成功的话
+                    function(position) {
+                        console.log(position)
+                        that.lon = position.coords.longitude;
+                        that.lat = position.coords.latitude;
+
+
+                    },
+                    //locationError  获取失败的话
+                    function(error) {
+                        var errorType = ['您拒绝共享位置信息', '获取不到位置信息', '获取位置信息超时'];
+                        alert(errorType[error.code - 1]);
+                    }
+                );
+            }
             this.init();
         },
         methods: {
@@ -228,7 +260,7 @@
                 console.log(223)
                 this.data = this.fjsjList;
                 //获取导航
-                getClassifyList({}).then(res => {
+                getClassifyList({orgroleId:23}).then(res => {
                 })
                 //获取优惠专区店铺
                 getShopStoreList({}).then(res => {
@@ -245,6 +277,14 @@
 
                 //获取轮播
                 getBannerList({type: 1}).then(res => {
+
+                })
+                //发现轮播
+                getBannerList({type: 2}).then(res => {
+
+                })
+                // 发现后面的分类
+                getBannerList({type: 3}).then(res => {
 
                 })
             },
