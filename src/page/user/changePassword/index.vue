@@ -52,7 +52,8 @@
                     pwdOld:this.pwdOld,
                     phone:'13641286838',
                 }).then(res=>{
-
+                    Toast(res.msg);
+                    this.$router.push('/setting')
                 })
             }
 

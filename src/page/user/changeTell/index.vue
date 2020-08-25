@@ -17,7 +17,7 @@
                 <van-button size="small" type="primary" @click="sendCode">发送验证码</van-button>
             </template>
         </van-field>
-        <van-button type="info">保存</van-button>
+        <van-button type="info" @click="save">保存</van-button>
     </div>
 </template>
 <script>
@@ -50,18 +50,22 @@
             onClickLeft() {
                 this.$router.push('/setting')
             },
-            sendCode(){
-                toSendMsg({
-                    tel:this.tel
-                }).then(res=>{
-
-                })
+            save(){
                 toUpdateTel({
                     code:this.code,
                     tel:this.tel
                 }).then(res=>{
-
+                    Toast(res.msg)
                 })
+            },
+            sendCode(){
+                toSendMsg({
+                    tel:this.tel
+                }).then(res=>{
+                    Toast(res.msg);
+                    this.$router.push('/setting')
+                })
+
 
             }
 
