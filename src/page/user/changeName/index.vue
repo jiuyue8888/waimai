@@ -12,7 +12,7 @@
     </div>
 </template>
 <script>
-
+    import {toUpdatePwd} from '@/server/index.js';
     import { Toast } from 'vant';
     export default {
         components: {
@@ -40,7 +40,13 @@
                 this.$router.push('/setting')
             },
             onClickRight() {
-                this.$router.push('/setting')
+
+
+                toUpdatePwd({
+                    phone:'13641286838'
+                }).then(res=>{
+
+                })
             },
 
 

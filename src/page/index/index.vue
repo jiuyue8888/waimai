@@ -36,10 +36,10 @@
             </div>
             <div class="store-box">
                 <div class="imgcls" v-for="(item,id) in dptjList" :key="id">
-                    <img src="../../static/img/b1.jpg"/>
-                    <div class="imgtitle"><img src="../../static/img/index/cs.png">
-                        <span>{{item.name}}</span></div>
-                    <div class="content">{{item.text}}</div>
+                    <img :src="'//'+item.disPic"/>
+                    <div class="imgtitle"><img :src="'//'+item.shopLogo">
+                        <span>{{item.shopName}}</span></div>
+                    <div class="content">根据您看过的店推荐</div>
                 </div>
 
             </div>
@@ -232,6 +232,7 @@
                 })
                 //获取优惠专区店铺
                 getShopStoreList({}).then(res => {
+                    this.dptjList = res.body.shopList
                 })
 
                 //获取周边商铺
