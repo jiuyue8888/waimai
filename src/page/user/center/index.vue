@@ -2,13 +2,15 @@
     <div class="center">
         <div class="top">
             <div class="user">
-                <img src="../../../static/img/user/missing-face.png">
+
+                <img v-if="photo!='no'" :src="photo">
+                <img v-else src="../../../static/img/user/missing-face.png">
                 <p v-if="isLogin">
-                    这是昵称
+                    {{name}}
                     <br>  <van-icon name="diamond" />超级会员
                 </p>
                 <p v-else><span @click="$router.push('/login')">登陆／</span>
-                    <span @click="$router.push('/login')">注册</span></p>
+                    <span @click="$router.push('/register')">注册</span></p>
             </div>
             <van-icon name="setting-o" class="setting" @click="$router.push('/setting')"/>
         </div>
@@ -21,7 +23,7 @@
                 <van-grid-item icon="refund-o" text="全部订单" />
             </van-grid>
         </div>
-        <div class="part2">
+        <div class="part2" v-show="isLogin">
             <van-grid :border="false" :column-num="3">
                 <van-grid-item icon="coupon" text="优惠券" @click="$router.push('/coupon')"/>
                 <van-grid-item icon="star" text="我的收藏" @click="$router.push('/star')"/>
@@ -36,23 +38,40 @@
 </template>  
 <script>  
 	import tabBar from '@/components/tabBar';
-
+    import {getCusMsg} from '@/server/index.js';
+    import {Toast} from 'vant';
     export default {
 		components: {
 			'vTabBar':tabBar
 		},
 		data(){
 			return {
-			    isLogin:false,
-
+			    isLogin:sessionStorage.getItem("tel")!==''&&sessionStorage.getItem("tel")!==null&&
+                sessionStorage.getItem("tel")!==undefined,
+               name:'',
+                photo:'no',
+                tel:''
 			}
 		},
 		onLoad(){
-			
-			
+
 		},
-		onReady() {
-			
+		created() {
+		    console.log(sessionStorage.getItem("tel"))
+		    if(sessionStorage.getItem("tel")==''){
+		        return;
+            }
+            getCusMsg({phone:sessionStorage.getItem("tel")}).then(res=>{
+                if(res.errorCode!=-1){
+                    Toast(res.msg)
+                    return;
+                }
+                this.name=res.body.map.name;
+                this.photo=(res.body.map.logo==''||res.body.map.logo==null||res.body.map.logo==undefined)?
+                'no':res.body.map.logo;
+                this.tel=res.body.map.tel;
+                sessionStorage.setItem("id",res.body.map.id)
+            })
 		},
 		onShow(){
 

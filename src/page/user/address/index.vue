@@ -19,7 +19,7 @@
 </template>
 <script>
 	import { toAddressList } from '@/server/index.js';
-
+	import {Toast} from 'vant';
 	export default {
 		components: {
 
@@ -27,21 +27,7 @@
 		data(){
 			return {
 				chosenAddressId: '1',
-				list: [
-					{
-						id: '1',
-						name: '张三',
-						tel: '13000000000',
-						address: '浙江省杭州市西湖区文三路 138 号东方通信大厦 7 楼 501 室',
-						isDefault: true,
-					},
-					{
-						id: '2',
-						name: '李四',
-						tel: '1310000000',
-						address: '浙江省杭州市拱墅区莫干山路 50 号',
-					},
-				]
+				list: []
 			}
 		},
 		onLoad(){
@@ -52,10 +38,24 @@
 
 		},
 		mounted(){
-			toAddressList({
-				id:''
-			}).then(res=>{
+			let arr = [];
 
+			toAddressList({
+				id:sessionStorage.getItem("id")
+			}).then(res=>{
+				if(res.errorCode!=-1){
+					Toast(res.msg)
+					return;
+				}
+			res.body.addressList.map(item=>{
+				arr.push({
+					id:item.id,
+                    name:item.name,
+                    address:item.remarks,
+                    tel:item.telephone
+				})
+			})
+				this.list = arr
 			})
 		},
 
@@ -64,7 +64,13 @@
 				this.$router.push('/add');
 			},
 			onEdit(item, index) {
-				this.$router.push('/add');
+
+				this.$router.push({
+				    path:'/add',
+                    query:{
+				        id:item.id
+                    }
+                });
 			},
 
 		}

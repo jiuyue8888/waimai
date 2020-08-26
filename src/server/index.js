@@ -20,6 +20,7 @@ export const getMainGoodsList=data=>postData(`getMainGoodsList`,data);
 export const getShopStoreList=data=>postData(`getShopStoreList`,data);
 //发送短信验证码
 export const toSendMsg=data=>postData(`toSendMsg`,data);
+export const toRegisterCus=data=>postData(`toRegisterCus`,data);
 //修改手机号
 export const toUpdateTel=data=>postData(`toUpdateTel`,data);
 //修改密码/昵称

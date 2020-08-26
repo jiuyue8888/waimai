@@ -6,6 +6,9 @@
 				left-arrow
 				@click-left="$router.push('/address')"
 		/>
+        <div class="add">
+
+        </div>
 		<van-address-edit
 				:area-list="areaList"
 				show-set-default
@@ -20,6 +23,7 @@
 <script>
 	import { addAddress } from '@/server/index.js';
 	import areaList from '@/utils/area.js';
+    import {Toast} from 'vant';
 	export default {
 		components: {
 
@@ -28,18 +32,16 @@
 			return {
 				areaList,
 				searchResult: [],
-				address:{
-					id:'',
-					userId:'',
-					name:'',
-					telephone:'',
-					remarks:'',
-					ifMr:'',
-				}
+                id:'',
+                userId:'',
+                name:'',
+                telephone:'',
+                remarks:'',
+                ifMr:'',
 			}
 		},
-		onLoad(){
-
+		created(){
+            this.userId = this.$route.query.id;
 
 		},
 		onReady() {
@@ -54,14 +56,17 @@
 			onSave(e) {
 				console.log(e)
 				addAddress({
-					id:'',
-					userId:'',
+					id:sessionStorage.getItem("id"),
 					name:e.name,
 					telephone:e.tel,
 					remarks:e.province+','+e.city+','+e.county+','+e.addressDetail,
 					ifMr:0,
 				}).then(res=>{
-
+                    Toast(res.msg)
+                    if(res.errorCode!=-1){
+                        return;
+                    }
+                    this.$router.push('/address')
 				})
 			},
 			onDelete() {

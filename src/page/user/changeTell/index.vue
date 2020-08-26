@@ -56,6 +56,7 @@
                     tel:this.tel
                 }).then(res=>{
                     Toast(res.msg)
+                    this.$router.push('/setting')
                 })
             },
             sendCode(){
@@ -63,7 +64,7 @@
                     tel:this.tel
                 }).then(res=>{
                     Toast(res.msg);
-                    this.$router.push('/setting')
+
                 })
 
 

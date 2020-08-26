@@ -41,8 +41,9 @@
             },
             onClickRight() {
 
+
                 toUpdatePwd({
-                    phone:'13641286838'
+                    phone:sessionStorage.getItem("tel")
                 }).then(res=>{
                     Toast(res.msg);
                 this.$router.push('/setting')
