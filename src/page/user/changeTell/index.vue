@@ -55,8 +55,14 @@
                     code:this.code,
                     tel:this.tel
                 }).then(res=>{
-                    Toast(res.msg)
-                    this.$router.push('/setting')
+                    if(res.errorCode==-1){
+                        Toast('修改成功');
+
+                        this.$router.push('/setting')
+                    }else{
+                        Toast(res.msg);
+                    }
+
                 })
             },
             sendCode(){

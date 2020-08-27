@@ -13,7 +13,7 @@
 			</van-uploader>
 
 		</van-cell>
-		<van-cell title="昵称" value="这里是昵称" is-link to="/changeName"/>
+		<van-cell title="修改昵称" is-link to="/changeName"/>
 		<van-cell title="修改手机号码" is-link to="/changeTell" />
 		<van-cell title="修改登陆密码" is-link to="/changePassword" />
 		</van-cell-group>

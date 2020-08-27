@@ -2,26 +2,27 @@
 	<div class="star">
 		<van-nav-bar
 
-				left-text="新增地址"
+				:left-text="userId?'修改地址':'新增地址'"
+				:right-text="userId?'删除':''"
 				left-arrow
 				@click-left="$router.push('/address')"
+				@click-right="onDelete"
 		/>
         <div class="add">
-
+            <van-field v-model="name" label-width="2.2em" label="姓名" placeholder="请输入姓名" />
+            <van-field v-model="telephone" label-width="2.2em" label="电话" placeholder="请输入电话" />
+            <van-field v-model="remarks" label-width="2.2em" label="地址" placeholder="请输入地址" />
         </div>
-		<van-address-edit
-				:area-list="areaList"
-				show-set-default
-				:area-columns-placeholder="['请选择', '请选择', '请选择']"
-				@save="onSave"
-				@change-detail="onChangeDetail"
-		/>
-
-
+        <van-cell title="设为默认地址">
+            <template #right-icon>
+                <van-switch v-model="ifMr" />
+            </template>
+        </van-cell>
+        <van-button type="info" @click="onSave" round style="display:block;width: 90%;margin: 20px auto;">确定</van-button>
 	</div>
 </template>
 <script>
-	import { addAddress } from '@/server/index.js';
+	import { addAddress,getAddressDetailById,updateAddress,deleteAddress } from '@/server/index.js';
 	import areaList from '@/utils/area.js';
     import {Toast} from 'vant';
 	export default {
@@ -42,7 +43,14 @@
 		},
 		created(){
             this.userId = this.$route.query.id;
-
+            getAddressDetailById({
+                id:this.$route.query.id
+            }).then(res=>{
+                this.name=res.body.addressDetail.name;
+                this.telephone=res.body.addressDetail.telephone;
+                this.remarks=res.body.addressDetail.remarks;
+                this.ifMr=res.body.addressDetail.ifMr==1;
+            })
 		},
 		onReady() {
 
@@ -53,37 +61,50 @@
 		},
 
 		methods: {
-			onSave(e) {
-				console.log(e)
-				addAddress({
-					id:sessionStorage.getItem("id"),
-					name:e.name,
-					telephone:e.tel,
-					remarks:e.province+','+e.city+','+e.county+','+e.addressDetail,
-					ifMr:0,
-				}).then(res=>{
+			onSave() {
+			    if(this.userId){
+                    updateAddress({
+                        id:this.$route.query.id,
+                        openId:sessionStorage.getItem("id"),
+                        name:this.name,
+                        telephone:this.telephone,
+                        remarks:this.remarks,
+                        ifMr:this.ifMr?1:0,
+                    }).then(res=>{
+                        Toast(res.msg)
+                        if(res.errorCode!=-1){
+                            return;
+                        }
+                        this.$router.push('/address')
+                    })
+                }else{
+                    addAddress({
+                        id:sessionStorage.getItem("id"),
+                        name:this.name,
+                        telephone:this.telephone,
+                        remarks:this.remarks,
+                        ifMr:this.ifMr?1:0,
+                    }).then(res=>{
+                        Toast(res.msg)
+                        if(res.errorCode!=-1){
+                            return;
+                        }
+                        this.$router.push('/address')
+                    })
+                }
+
+
+			},
+			onDelete() {
+                deleteAddress({id:this.$route.query.id}).then(res=>{
                     Toast(res.msg)
                     if(res.errorCode!=-1){
                         return;
                     }
                     this.$router.push('/address')
-				})
+                })
 			},
-			onDelete() {
-				Toast('delete');
-			},
-			onChangeDetail(val) {
-				if (val) {
-					this.searchResult = [
-						{
-							name: '黄龙万科中心',
-							address: '杭州市西湖区',
-						},
-					];
-				} else {
-					this.searchResult = [];
-				}
-			},
+
 
 		}
 	}

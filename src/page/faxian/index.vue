@@ -30,6 +30,7 @@
     </div>
 </template>
 <script>
+    import {getUniversityList} from '@/server/index.js';
     import card from '@/components/card/index.vue';
     import {Toast} from 'vant';
 
@@ -64,8 +65,10 @@
         onReady() {
 
         },
-        onShow() {
+        created() {
+            getUniversityList({}).then(res=>{
 
+            })
 
         },
 

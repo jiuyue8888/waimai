@@ -24,7 +24,7 @@
         <div class=" bannerimg-box">
             <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
                 <van-swipe-item v-for="(item,index) in bannerData" :key="index">
-                    <img :src="item.src" class="loaded"/>
+                    <img :src="'//'+item.bannerUrl" class="loaded"/>
                 </van-swipe-item>
             </van-swipe>
 
@@ -209,24 +209,7 @@
                 data:[],//商家列表
 
                 //轮播图
-                bannerData: [
-                    {
-                        page: '/pages/product/product?id=457',
-                        src: '//imgs.1op.cn/i/hxshop/banner/banner.jpg'
-                    },
-                    {
-                        page: '/pages/product/product?id=57',
-                        src: '//imgs.1op.cn/i/hxshop/banner/banner.jpg'
-                    },
-                    {
-                        page: '/pages/product/product?id=95',
-                        src: '//imgs.1op.cn/i/hxshop/banner/banner.jpg'
-                    },
-                    {
-                        page: '/pages/product/product?id=45',
-                        src: '//imgs.1op.cn/i/hxshop/banner/banner.jpg'
-                    }
-                ],
+                bannerData: [],
 
             }
         },
@@ -277,7 +260,7 @@
 
                 //获取轮播
                 getBannerList({type: 1}).then(res => {
-
+                    this.bannerData = res.body.bannerList
                 })
                 //发现轮播
                 getBannerList({type: 2}).then(res => {

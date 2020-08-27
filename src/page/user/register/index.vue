@@ -120,6 +120,9 @@
                     pwd:this.pwd,
                 }).then(res=>{
                     Toast(res.msg)
+                    if(res.errorCode!=-1){
+                        return;
+                    }
                     this.$router.push('/login')
                 })
             }

@@ -74,6 +74,9 @@
 					pwd:this.pwd,
 				}).then(res=>{
 					Toast(res.msg);
+					if(res.errorCode!=-1){
+						return;
+					}
 					sessionStorage.setItem("tel", this.tel);
 					this.$router.push('/center')
 				})

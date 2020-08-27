@@ -39,6 +39,8 @@ export const updateAddress=data=>postData(`updateAddress`,data);
 export const deleteAddress=data=>postData(`deleteAddress`,data);
 //通过收货地址id，获取收货地址详情
 export const getAddressDetailById=data=>postData(`getAddressDetailById`,data);
+//忘记密码
+export const toForgetPwd =data=>postData(`toForgetPwd `,data);
 
 //发现相关
 //获取发现分类

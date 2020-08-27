@@ -43,10 +43,17 @@
 
 
                 toUpdatePwd({
-                    phone:sessionStorage.getItem("tel")
+                    phone:sessionStorage.getItem("tel"),
+                    nickName:this.value
                 }).then(res=>{
+                    if(res.errorCode==-1){
+                    Toast('修改成功');
+                    this.$router.push('/setting')
+                    }else{
                     Toast(res.msg);
-                this.$router.push('/setting')
+                }
+
+
                 })
             },
 
