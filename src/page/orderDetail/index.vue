@@ -17,6 +17,7 @@
                       :to="{path:'/storeDetail',query:{id:detail.children[0].shopId}}" />
             <van-card
                     v-for="(item,id) in detail.children"
+                    :key="id"
                     :num="item.num"
                     :price="item.price"
                     :desc="描述信息"

@@ -50,6 +50,7 @@
                             <van-card
                                     v-for="(item,id) in orderList"
                                     :price="item.price"
+                                    :key="id"
 
                                     :title="item.name"
 
