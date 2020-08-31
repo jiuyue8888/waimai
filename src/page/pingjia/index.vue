@@ -9,14 +9,14 @@
 
         <van-cell>
             <template #title>
-                <p class="storeName"><img src="../../img/b1.jpg">店铺名称</p>
+                <p class="storeName"><img :src="'//'+detail.logo">{{detail.shopName}}</p>
             </template>
             <template #default>
-                <van-rate v-model="value" />
+                <van-rate v-model="dicId" />
             </template>
         </van-cell>
         <van-field
-                v-model="message"
+                v-model="appContent"
                 rows="2"
                 autosize
                 type="textarea"
@@ -25,11 +25,14 @@
                 placeholder="请写下您对商家的评价"
                 show-word-limit
         />
-        <el-button type="warning" round>提交评价</el-button>
+        <el-button type="warning" round @click="submit">提交评价</el-button>
 
     </div>
 </template>
 <script>
+
+    import {addAppraise,getDetailByshopId} from '@/server/index.js';
+    import {Toast} from 'vant';
 
     export default {
         components: {
@@ -37,12 +40,15 @@
         },
         data(){
             return {
-                value:3,
-                message:''
+                dicId:5,
+                appContent:'',
+                detail:{}
             }
         },
-        onLoad(){
-
+        mounted(){
+            getDetailByshopId({shopId:this.$route.query.id}).then(res=>{
+                this.detail=res.body
+            })
 
         },
         onReady() {
@@ -54,7 +60,24 @@
         },
 
         methods: {
-
+            submit(){
+                addAppraise({
+                    userId:sessionStorage.getItem('id'),
+                    shopId:this.$route.query.id,
+                    appContent:this.appContent,
+                    dicId:this.dicId
+                }).then(res=>{
+                    if(res.errorCode==-1){
+                        Toast('评价成功')
+                        this.$router.push({
+                            path:'/storeDetail',
+                            query:{id:this.$route.query.id}
+                        })
+                    }else{
+                        Toast(res.msg)
+                    }
+                })
+            }
         }
     }
 </script>

@@ -16,7 +16,8 @@ import qishouJoin from '@/page/user/join/qishouJoin.vue'
 import storeJoin from '@/page/user/join/storeJoin.vue'
 import login from '@/page/user/login'
 import storeList from '@/page/storeList'
-import faxian from '@/page/faxian'
+import faxian from '@/page/faxian/index.vue'
+import fdetail from '@/page/faxian/detail.vue'
 import kvList from '@/page/kvList'
 import storeDetail from '@/page/storeDetail'
 import register from '@/page/user/register'
@@ -71,5 +72,6 @@ export default new Router({
         {path: '/orderDone', name: 'orderDone', component: orderDone},
         {path: '/orderDoing', name: 'orderDoing', component: orderDoing},
         {path: '/orderDetail', name: 'orderDetail', component: orderDetail},
+        {path: '/fdetail', name: 'fdetail', component: fdetail},
     ]
 })

@@ -16,6 +16,8 @@
 <script>
     import card1 from '@/components/card1/index.vue';
     import {Toast} from 'vant';
+    import {getShopStoreListFx} from '@/server/index.js';
+
 
     export default {
         components: {
@@ -24,25 +26,15 @@
         data() {
             return {
                 tab: ['推荐', '美食', '旅行', '购物'],
-                data: [
-                    {
-                        img: '',
-                        title: '这里是名文案描述这里是名文案描述这里是名文案描述'
-                    }, {
-                        img: '',
-                        title: '这里是名文案描述这里是名文案描述这里是名文案描述这里是名文案描述这里是名文案描述这里是名文案描述'
-                    }, {
-                        img: '',
-                        title: '这里是名文案描述这里是名文案'
-                    }, {
-                        img: '',
-                        title: '这里是名文案描述这里是名这里是名文案描述这里是名文案文案'
-                    }
-                ],
+                data: [],
             }
         },
-        onLoad() {
-
+        created() {
+            getShopStoreListFx({
+                tagId:this.$route.query.id
+            }).then(res=>{
+                this.data = res.body.shopList
+            })
 
         },
         onReady() {

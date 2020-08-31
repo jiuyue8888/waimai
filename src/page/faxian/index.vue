@@ -6,19 +6,23 @@
                 @click-left="$router.push('/')"
         />
         <van-tabs v-model="active" sticky>
-            <van-tab v-for="tab in tab" :title="tab">
+            <van-tab v-for="(tab,ids) in tab" :title="tab.name" :key="ids">
                 <ul class="flist">
-                    <li v-for="(item,id) in data" :key="id">
-                        <img src="../../img/user-bg.jpg">
-                        <h3>{{item.title}}</h3>
+                    <li v-for="(item,id) in data[ids]" :key="id"
+                        @click="$router.push({
+                        path:'/fdetail',
+                        query:{id:item.id}
+                    })">
+                        <img :src="'//'+item.pic">
+                        <h3>{{item.intro}}</h3>
                         <p>
                     <span>
-                        <img src="../../img/user-bg.jpg">
-                        <i>这里是昵称</i>
+                        <img :src="'//'+item.logo">
+                        <i>{{item.name}}</i>
                     </span>
                             <span>
                         <van-icon name="good-job-o"/>
-                        <em>3</em>
+                        <em>{{item.num}}</em>
                     </span>
                         </p>
                     </li>
@@ -30,7 +34,7 @@
     </div>
 </template>
 <script>
-    import {getUniversityList} from '@/server/index.js';
+    import {getUniversityList,getBounced} from '@/server/index.js';
     import card from '@/components/card/index.vue';
     import {Toast} from 'vant';
 
@@ -40,22 +44,9 @@
         },
         data() {
             return {
-                tab: ['推荐', '美食', '旅行', '购物'],
-                data: [
-                    {
-                        img: '',
-                        title: '这里是名文案描述这里是名文案描述这里是名文案描述'
-                    }, {
-                        img: '',
-                        title: '这里是名文案描述这里是名文案描述这里是名文案描述这里是名文案描述这里是名文案描述这里是名文案描述'
-                    }, {
-                        img: '',
-                        title: '这里是名文案描述这里是名文案'
-                    }, {
-                        img: '',
-                        title: '这里是名文案描述这里是名这里是名文案描述这里是名文案文案'
-                    }
-                ],
+                tab: [],
+                active:0,
+                data: [],
             }
         },
         onLoad() {
@@ -66,13 +57,25 @@
 
         },
         created() {
+            let arr=[];
             getUniversityList({}).then(res=>{
+                this.tab=res.body.universityList;
+                res.body.universityList.map(item=>{
+                    getBounced({id:item.id}).then(ress=>{
+                        arr.push(ress.body.listmap);
+                    })
+                })
+                this.data = arr;
 
             })
 
         },
 
-        methods: {}
+        methods: {
+            getList(){
+
+            }
+        }
     }
 </script>
 <style lang='less'>

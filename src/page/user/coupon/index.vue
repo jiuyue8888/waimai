@@ -7,35 +7,59 @@
 				@click-left="$router.push('/center')"
 		/>
 		<van-tabs v-model="active">
-			<van-tab title="最新领券"></van-tab>
-			<van-tab title="即将到期"></van-tab>
+			<van-tab title="最新领券">
+				<div class="couponList">
+					<div class="van-coupon" v-for="(item,id) in coupons">
+
+						<div class="top">
+							<img :src="'//'+item.logo">
+							<p>
+								{{item.shopName}}<br>
+								<span>{{item.startDate}}-{{item.endDate}}</span>
+							</p>
+							<p>
+								¥{{item.fees}}<br>
+								<span>满{{item.charge}}可用</span>
+							</p>
+						</div>
+						<div class="down">
+							<span>仅用于指定商家</span>
+							<van-button round type="danger" size="mini">去使用</van-button>
+						</div>
+					</div>
+				</div>
+			</van-tab>
+			<van-tab title="即将到期">
+				<div class="couponList">
+					<div class="van-coupon" v-for="(item,id) in disabledCoupons">
+
+						<div class="top">
+							<img :src="'//'+item.logo">
+							<p>
+								{{item.shopName}}<br>
+								<span>{{item.startDate}}-{{item.endDate}}</span>
+							</p>
+							<p>
+								¥{{item.fees}}<br>
+								<span>满{{item.charge}}可用</span>
+							</p>
+						</div>
+						<div class="down">
+							<span>仅用于指定商家</span>
+							<van-button round type="danger" size="mini">去使用</van-button>
+						</div>
+					</div>
+				</div>
+			</van-tab>
 		</van-tabs>
 
-		<div class="couponList">
-			<div class="van-coupon" v-for="(item,id) in coupons">
 
-				<div class="top">
-					<img src="../../../static/img/user/user-bg.jpg">
-					<p>
-						周黑鸭<br>
-						<span>2020.07.21 15:56-2020.07.21 23:59</span>
-					</p>
-					<p>
-						¥6<br>
-						<span>满49可用</span>
-					</p>
-				</div>
-				<div class="down">
-					<span>仅用于指定商家</span>
-					<van-button round type="danger" size="mini">去使用</van-button>
-				</div>
-			</div>
-		</div>
 
 	</div>
 </template>
 <script>
 
+	import {getCounList} from '@/server/index.js';
 	import { Toast } from 'vant';
 	const coupon = {
 		available: 1,
@@ -56,14 +80,20 @@
 			return {
 				coupons: [coupon,coupon,coupon],
 				disabledCoupons: [coupon],
+				active:'0'
 			}
 		},
 		onLoad(){
 
 
 		},
-		onReady() {
-
+		created() {
+			getCounList({type:0}).then(res=>{
+				this.coupons=res.body.list
+			})
+			getCounList({type:1}).then(res=>{
+				this.disabledCoupons=res.body.list
+			})
 		},
 		onShow(){
 

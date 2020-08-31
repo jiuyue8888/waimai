@@ -16,6 +16,7 @@
 <script>
     import card from '@/components/card/index.vue';
     import { Toast } from 'vant';
+    import {toMyApplyShop} from '@/server/index.js';
 
     export default {
         components: {
@@ -23,23 +24,14 @@
         },
         data(){
             return {
-                data: [
-                    {
-                        img:'',
-                        title:''
-                    },{
-                        img:'',
-                        title:''
-                    },{
-                        img:'',
-                        title:''
-                    }
-                ],
+                data: [],
             }
         },
-        onLoad(){
+        created(){
 
-
+            toMyApplyShop({userId:sessionStorage.getItem("id")}).then(res=>{
+                this.data = res.body.list;
+            })
         },
         onReady() {
 

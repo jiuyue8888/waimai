@@ -8,52 +8,59 @@
             <span>
                 收货地址
             </span>
-            <p>这里是地址这里是地址这里是地址<br/>联系人：张三、电话：1268833772</p>
+            <p>{{detail.detail}}<br/>联系人：{{detail.name}}、
+                电话：{{detail.tel}}</p>
 
         </div>
         <div class="part2">
-            <van-cell title="商家店铺" is-link to="/storeDetail" />
+            <van-cell :title="detail.children[0].shopName" is-link
+                      :to="{path:'/storeDetail',query:{id:detail.children[0].shopId}}" />
             <van-card
-                    num="2"
-                    price="2.00"
-                    desc="描述信息"
-                    title="商品标题"
-                    thumb="https://img.yzcdn.cn/vant/ipad.jpeg"
+                    v-for="(item,id) in detail.children"
+                    :num="item.num"
+                    :price="item.price"
+                    :desc="描述信息"
+                    :title="item.goodsName"
+                    :thumb="'//'+item.shoplogo"
             />
-            <van-card
-                    num="2"
-                    price="2.00"
-                    desc="描述信息"
-                    title="商品标题"
-                    thumb="https://img.yzcdn.cn/vant/ipad.jpeg"
-            />
-            <p><span>配送费</span><em>¥30</em></p>
-            <p><span><van-tag type="danger">减</van-tag>店铺满减</span><em>-¥30</em></p>
-            <p><span><van-tag type="danger">红包</van-tag>优惠</span><em>-¥30</em></p>
+
+            <div v-show="false">
+                <p><span>配送费</span><em>¥30</em></p>
+                <p><span><van-tag type="danger">减</van-tag>店铺满减</span><em>-¥30</em></p>
+                <p><span><van-tag type="danger">红包</van-tag>优惠</span><em>-¥30</em></p>
+            </div>
+
             <van-divider />
-            <van-cell title="商家电话" icon="phone" value="实付：¥30" />
+            <van-cell title="商家电话" icon="phone" :value="'实付：¥'+detail.countprice" />
         </div>
         <div class="part3">
             <van-cell title="下单" is-link value="预计今日5：00送达" />
-            <van-field v-model="text" label="备注" placeholder="请输入备注信息" label-width="2.2em"/>
+            <van-field v-model="remark" label="备注" placeholder="请输入备注信息" label-width="2.2em"/>
 
         </div>
 
-        <van-submit-bar :price="3050" button-text="立即支付" @submit="onSubmit" />
+        <van-submit-bar :price="detail.countprice*100" button-text="立即支付" @submit="onSubmit" />
 
     </div>
 </template>
 <script>
-
+    import {getGoodsToOrder,toAddOrderRecord} from '@/server/index.js';
+    import {Toast} from 'vant';
     export default {
 
         data() {
             return {
-
+                detail:{},
+                remark:''
             }
         },
-        onLoad() {
-
+        mounted() {
+            getGoodsToOrder({
+                shoppingCartId: this.$route.query.id,
+                userId: sessionStorage.getItem('id')
+            }).then(res => {
+                this.detail=res.body.shopList[0]
+            })
 
         },
         onReady() {
@@ -64,7 +71,25 @@
 
         },
 
-        methods: {}
+        methods: {
+            onSubmit(){
+                toAddOrderRecord({
+                    userId:sessionStorage.getItem('id'),
+                    addressId:this.detail.addressId,
+                    payType:1,
+                    remark:this.remark,
+                    orderPrice:this.detail.countprice,
+                    ifKd:this.detail.ifKd,
+                    kdPrice:this.detail.kdPrice||0,
+                    shopId:this.detail.children[0].shopId,
+                    ifNew:this.detail.ifNew,
+                    newPrice:this.detail.newPrice||0,
+                    shoppingCartId:this.$route.query.id
+                }).then(res=>{
+                    Toast(res.msg)
+                })
+            }
+        }
     }
 </script>
 <style lang='less'>

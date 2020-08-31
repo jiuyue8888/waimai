@@ -40,7 +40,20 @@ export const deleteAddress=data=>postData(`deleteAddress`,data);
 //通过收货地址id，获取收货地址详情
 export const getAddressDetailById=data=>postData(`getAddressDetailById`,data);
 //忘记密码
-export const toForgetPwd =data=>postData(`toForgetPwd `,data);
+export const toForgetPwd =data=>postData(`toForgetPwd`,data);
+//获取优惠券列表
+export const getCounList=data=>postData(`getCounList`,data);
+//申请店铺加盟
+export const toApplyShop =data=>postData(`toApplyShop`,data);
+//申请骑手加盟
+export const toApplyRider =data=>postData(`toApplyRider`,data);
+//获取收藏店铺列表
+export const toMyApplyShop =data=>postData(`toMyApplyShop`,data);
+//收藏店铺
+export const toCollectShop =data=>postData(`toCollectShop`,data);
+//评价接口
+export const appraiseList =data=>postData(`appraiseList`,data);
+
 
 //发现相关
 //获取发现分类
@@ -49,6 +62,8 @@ export const getUniversityList=data=>postData(`getUniversityList`,data);
 export const getBounced=data=>postData(`getBounced`,data);
 //根据发现id获取发现详情
 export const toSignUpPage=data=>postData(`toSignUpPage`,data);
+//获取品牌专区店铺（发现后面的图片链接的店铺）
+export const getShopStoreListFx=data=>postData(`getShopStoreListFx`,data);
 
 //购物相关
 //根据店铺id获取店铺里的商品分类
@@ -57,7 +72,8 @@ export const getGoodsListByshopId=data=>postData(`getGoodsListByshopId`,data);
 export const getDetailByshopId=data=>postData(`getDetailByshopId`,data);
 //获取分类下的商品
 export const getGoodsByClassifyId=data=>postData(`getGoodsByClassifyId`,data);
-
+//跑腿列表
+export const addSpellRecord=data=>postData(`addSpellRecord`,data);
 
 //购物车-订单
 //获取购物车列表
@@ -80,4 +96,9 @@ export const toRequestPayAgin=data=>postData(`toRequestPayAgin`,data);
 export const getOrderListByOrderState=data=>postData(`getOrderListByOrderState`,data);
 //订单详情
 export const toOrderRecordDetail=data=>postData(`toOrderRecordDetail`,data);
-
+//deleteOrder
+export const deleteOrder=data=>postData(`deleteOrder`,data);
+//addAppraise
+export const addAppraise=data=>postData(`addAppraise`,data);
+//toShoppingCartList
+export const toShoppingCartList=data=>postData(`toShoppingCartList`,data);

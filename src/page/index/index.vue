@@ -12,10 +12,15 @@
         <div class="container menu-box">
 
 
-            <div class="item-box" v-for="(item,i) in menuList" :key="i" @click="$router.push('/storeList')">
-                <img src="@/static/img/index/cs.png"/>
+            <div class="item-box" v-for="(item,i) in menuList" :key="i" @click="$router.push({
+            path:'storeList',
+            query:{
+            id:item.classifyId
+            }
+            })">
+                <img :src="'//'+item.icon"/>
                 <div class="tit">
-                    <span>{{item.tit}}</span>
+                    <span>{{item.name}}</span>
                 </div>
             </div>
         </div>
@@ -52,13 +57,23 @@
             </div>
         </div>
         <ul class="homeKv">
-            <li @click="$router.push('/kvList')"><img src="../../img/t1.jpg"></li>
-            <li @click="$router.push('/kvList')"><img src="../../img/t2.jpg"></li>
-            <li @click="$router.push('/kvList')"><img src="../../img/t3.jpg"></li>
-            <li @click="$router.push('/kvList')"><img src="../../img/t4.jpg"></li>
+            <li v-for="(item,id) in kvs" @click="$router.push({path:'/kvList',query:{id:item.shopId}})" >
+                <div>
+                    <p>{{item.baseName}}</p>
+                    <span>{{item.orgName}}</span>
+                </div>
+                <img :src="'//'+item.bannerUrl">
+            </li>
+
         </ul>
 
         <!-- 附近商家 到店自取 -->
+        <div>
+            <span class="tit" style="font-size: 20px;line-height: 50px">附近商家</span>
+            <vCard :data="data" :type="0"></vCard>
+        </div>
+
+        <!--
         <van-tabs v-model="active" sticky>
             <van-tab v-for="(item,index) in items" :key="index" :title="item" title-style="titleList">
                 <van-dropdown-menu active-color="#1989fa">
@@ -71,6 +86,7 @@
                 <vCard :data="data" :type="0"></vCard>
             </van-tab>
         </van-tabs>
+        -->
 
         <vTabBar :active="0"></vTabBar>
 
@@ -91,10 +107,10 @@
             return {
                 active:0,
                 type:'0',
-                lon: '',//经度
-                lat: '',//纬度
+                lon: '112.535959',//经度
+                lat: '37.867343',//纬度
                 selectName: '',//商铺搜索名称
-                items: ['附近商家', '到店自取', '0元派送'],
+                items: ['附近商家', '', ''],
                 value1: 0,
                 value2: 'a',
                 option1: [
@@ -109,38 +125,7 @@
                 ],
 
                 //导航列表
-                menuList: [
-
-                    {
-                        img: '@/static/img/index/cs.png',
-                        tit: '美食'
-                    },
-                    {
-                        img: '@/static/img/index/sc.png',
-                        tit: '同城闪购'
-                    },
-                    {
-                        img: '/static/img/index/sg.png',
-                        tit: '生鲜蔬果'
-                    },
-                    {
-                        img: '/static/img/index/xh.png',
-                        tit: '鲜花蛋糕'
-                    },
-                    {
-                        img: '/static/img/index/yd.png',
-                        tit: '跑腿代购'
-                    },
-                    {
-                        img: '@/static/img/index/cs.png',
-                        tit: '美食'
-                    },
-                    {
-                        img: '@/static/img/index/sc.png',
-                        tit: '同城闪购'
-                    },
-
-                ],
+                menuList: [],
 
                 //店铺推荐
                 dptjList: [
@@ -210,7 +195,7 @@
 
                 //轮播图
                 bannerData: [],
-
+                kvs:[]
             }
         },
         onLoad() {
@@ -243,7 +228,8 @@
                 console.log(223)
                 this.data = this.fjsjList;
                 //获取导航
-                getClassifyList({orgroleId:23}).then(res => {
+                getClassifyList({}).then(res => {
+                    this.menuList = res.body.classifyList;
                 })
                 //获取优惠专区店铺
                 getShopStoreList({}).then(res => {
@@ -256,6 +242,7 @@
                     lat: this.lat,
                     selectName: this.selectName
                 }).then(res => {
+                    this.data = res.body.shopList
                 })
 
                 //获取轮播
@@ -268,7 +255,7 @@
                 })
                 // 发现后面的分类
                 getBannerList({type: 3}).then(res => {
-
+                    this.kvs = res.body.bannerList
                 })
             },
             onClickItem(e) {
