@@ -1,11 +1,17 @@
 import axios from 'axios';
-const url = 'http://ap.suda60.com/';
+const url = 'http://www.suda60.com/';
 
 const postData=(_url,data)=>{
 
     return axios.get(`${url}${_url}`,{
         params:data
     }).then(res=>res.data);
+
+
+}
+const postData1=(_url,data)=>{
+
+    return axios.post(`${url}${_url}`,data).then(res=>res.data);
 
 
 }

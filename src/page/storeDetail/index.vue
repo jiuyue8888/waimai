@@ -185,6 +185,15 @@
 
             getGoodsListByshopId({shopId: id}).then(res => {
                 this.classifyList = res.body.classifyList;
+            if(that.$route.query.type=='22'){
+                res.body.classifyList.map((item,id)=>{
+                    if(item.classifyId == that.$route.query.bid){
+                    that.activeKey = id;
+                    console.log(that.activeKey)
+                }
+            })
+            }
+
                 this.getGoods();
             })
 
@@ -247,9 +256,11 @@
                         userId: sessionStorage.getItem('id'),
                         num: item.num
                     }).then(res => {
-                        if (res.errorCode == -1&&type!=1) {
+                        if (res.errorCode == -1) {
                             this.getCart()
+
                         }
+                        this.getGoods()
                     })
                 }, 300)
             },
@@ -262,9 +273,11 @@
                         price: item.price,
                         num: 1
                     }).then(res => {
-                        if (res.errorCode == -1&&type!=1) {
+                        if (res.errorCode == -1) {
                             this.getCart()
+
                         }
+                        this.getGoods()
                     })
                 }, 300)
 

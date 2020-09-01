@@ -4,7 +4,7 @@
             <div class="container">
                 <div class="address-box">
                     <van-icon name="location" color="rgb(0, 122, 255)"/>
-                    <span>正在获取位置正在获取位置</span>
+                    <span>{{add!=''?add:'正在获取位置正在获取位置'}}</span>
                 </div>
                 <van-search v-model="selectName" shape="round" placeholder="请输入搜索关键词"/>
             </div>
@@ -13,9 +13,11 @@
 
 
             <div class="item-box" v-for="(item,i) in menuList" :key="i" @click="$router.push({
-            path:'storeList',
+            path:'storeDetail',
             query:{
-            id:item.classifyId
+            id:item.shopId,
+            bid:item.baseUrl,
+            type:item.urlType
             }
             })">
                 <img :src="'//'+item.icon"/>
@@ -28,7 +30,14 @@
         <!-- 轮播图 -->
         <div class=" bannerimg-box">
             <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-                <van-swipe-item v-for="(item,index) in bannerData" :key="index">
+                <van-swipe-item v-for="(item,index) in bannerData" :key="index" @click="$router.push({
+            path:'storeDetail',
+            query:{
+            id:item.shopId,
+            bid:item.baseUrl,
+            type:item.urlType
+            }
+            })">
                     <img :src="'//'+item.bannerUrl" class="loaded"/>
                 </van-swipe-item>
             </van-swipe>
@@ -40,7 +49,14 @@
                 <span class="tit">优惠专区</span>
             </div>
             <div class="store-box">
-                <div class="imgcls" v-for="(item,id) in dptjList" :key="id">
+                <div class="imgcls" v-for="(item,id) in dptjList" :key="id" @click="$router.push({
+            path:'storeDetail',
+            query:{
+            id:item.shopId,
+            bid:item.baseUrl,
+            type:item.urlType
+            }
+            })">
                     <img :src="'//'+item.disPic"/>
                     <div class="imgtitle"><img :src="'//'+item.shopLogo">
                         <span>{{item.shopName}}</span></div>
@@ -57,7 +73,12 @@
             </div>
         </div>
         <ul class="homeKv">
-            <li v-for="(item,id) in kvs" @click="$router.push({path:'/kvList',query:{id:item.shopId}})" >
+            <li v-for="(item,id) in kvs" @click="$router.push({path:'/storeDetail',
+            query:{
+            id:item.shopId,
+            bid:item.baseUrl,
+            type:item.urlType
+            }})">
                 <div>
                     <p>{{item.baseName}}</p>
                     <span>{{item.orgName}}</span>
@@ -100,13 +121,14 @@
 
     export default {
         components: {
-            'vCard':card,
-            'vTabBar':tabBar
+            'vCard': card,
+            'vTabBar': tabBar
         },
         data() {
             return {
-                active:0,
-                type:'0',
+                active: 0,
+                type: '0',
+                add:'',
                 lon: '112.535959',//经度
                 lat: '37.867343',//纬度
                 selectName: '',//商铺搜索名称
@@ -114,14 +136,14 @@
                 value1: 0,
                 value2: 'a',
                 option1: [
-                    { text: '全部商品', value: 0 },
-                    { text: '新款商品', value: 1 },
-                    { text: '活动商品', value: 2 },
+                    {text: '全部商品', value: 0},
+                    {text: '新款商品', value: 1},
+                    {text: '活动商品', value: 2},
                 ],
                 option2: [
-                    { text: '默认排序', value: 'a' },
-                    { text: '好评排序', value: 'b' },
-                    { text: '销量排序', value: 'c' },
+                    {text: '默认排序', value: 'a'},
+                    {text: '好评排序', value: 'b'},
+                    {text: '销量排序', value: 'c'},
                 ],
 
                 //导航列表
@@ -155,47 +177,47 @@
                 //附近商家
                 fjsjList: [
                     {
-                        img:'',
-                        title:''
-                    },{
-                        img:'',
-                        title:''
-                    },{
-                        img:'',
-                        title:''
+                        img: '',
+                        title: ''
+                    }, {
+                        img: '',
+                        title: ''
+                    }, {
+                        img: '',
+                        title: ''
                     }
                 ],
                 //到店自取
                 ddzqList: [
                     {
-                        img:'',
-                        title:''
-                    },{
-                        img:'',
-                        title:''
-                    },{
-                        img:'',
-                        title:''
+                        img: '',
+                        title: ''
+                    }, {
+                        img: '',
+                        title: ''
+                    }, {
+                        img: '',
+                        title: ''
                     }
                 ],
                 //0元派送
                 lypsList: [
                     {
-                        img:'',
-                        title:''
-                    },{
-                        img:'',
-                        title:''
-                    },{
-                        img:'',
-                        title:''
+                        img: '',
+                        title: ''
+                    }, {
+                        img: '',
+                        title: ''
+                    }, {
+                        img: '',
+                        title: ''
                     }
                 ],
-                data:[],//商家列表
+                data: [],//商家列表
 
                 //轮播图
                 bannerData: [],
-                kvs:[]
+                kvs: []
             }
         },
         onLoad() {
@@ -204,22 +226,17 @@
         },
         mounted() {
             let that = this;
-            if(navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    //locationSuccess 获取成功的话
-                    function(position) {
-                        console.log(position)
-                        that.lon = position.coords.longitude;
-                        that.lat = position.coords.latitude;
+            if (navigator.geolocation) {
+                var geolocation = new BMap.Geolocation();
+                geolocation.getCurrentPosition(function getinfo(position) {
+                    console.log(position)
+                    that.add = position.address.city
+                    that.lon = position.point.lng;
+                    that.lat = position.point.lat
+                }, function (e) {
+                    alert("获取百度定位位置信息失败");
+                }, {provider: 'baidu'});
 
-
-                    },
-                    //locationError  获取失败的话
-                    function(error) {
-                        var errorType = ['您拒绝共享位置信息', '获取不到位置信息', '获取位置信息超时'];
-                        alert(errorType[error.code - 1]);
-                    }
-                );
             }
             this.init();
         },
