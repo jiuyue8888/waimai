@@ -45,7 +45,7 @@
     </div>
 </template>
 <script>
-    import {getGoodsToOrder,toAddOrderRecord} from '@/server/index.js';
+    import {getGoodsToOrder,toAddOrderRecord,toPayOrder} from '@/server/index.js';
     import {Toast} from 'vant';
     export default {
 
@@ -88,6 +88,15 @@
                     shoppingCartId:this.$route.query.id
                 }).then(res=>{
                     Toast(res.msg)
+                    toPayOrder({
+                        money:this.detail.countprice,
+                        userId:sessionStorage.getItem('id'),
+                        orderNumber:res.body.orderId,
+                        type:2
+                    }).then(res=>{
+                        //window.open(res.body.url)
+                        axios.post(res.body.url)
+                    })
                 })
             }
         }

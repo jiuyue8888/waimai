@@ -103,6 +103,7 @@
     import tabBar from '@/components/tabBar';
     import {addSpellRecord,toPayOrder} from '@/server/index.js';
     import {Toast} from 'vant';
+    import axios from 'axios';
     const coupon = {
         available: 1,
         condition: '无使用门槛\n最多优惠12元',
@@ -182,7 +183,8 @@
                             orderNumber:res.body.orderId,
                             type:2
                         }).then(res=>{
-
+                            //window.open(res.body.url)
+                            axios.post(res.body.url)
                         })
                     }else{
                         Toast(res.msg);

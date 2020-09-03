@@ -237,7 +237,7 @@
                 getShoppingCartAllList({
                     userId: sessionStorage.getItem('id')
                 }).then(res => {
-                    this.shopCarList = res.body.shopCarList[0].children;
+                    this.shopCarList = res.body.shopCarList[0]&&res.body.shopCarList[0].children;
 
                     let arr = [];
                     let len=0
