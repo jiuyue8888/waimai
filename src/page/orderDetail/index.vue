@@ -91,11 +91,11 @@
                     toPayOrder({
                         money:this.detail.countprice,
                         userId:sessionStorage.getItem('id'),
-                        orderNumber:res.body.orderId,
+                        orderNumber:res.body.orderMap.orderId,
                         type:2
                     }).then(res=>{
-                        //window.open(res.body.url)
-                        axios.post(res.body.url)
+                        window.location.href=res.body.url
+                        //axios.post(res.body.url)
                     })
                 })
             }

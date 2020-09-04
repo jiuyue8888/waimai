@@ -60,7 +60,7 @@
                                     <span style="margin-top: 10px;display: block;">月售{{item.stockNum}} 好评100%</span>
                                 </template>
                                 <template #footer>
-                                    <van-stepper v-model="item.carNum" theme="round" min="0"
+                                    <van-stepper v-model="item.carNum" theme="round" min="0" disable-input
                                                  @plus="plus(item)" @minus="minus(item)"
                                                  button-size="18"/>
 
@@ -72,7 +72,7 @@
                         <div class="content">
                             <div v-for="(item,id) in shopCarList" :key="id" v-show="item.num>0">
                                 <p><img :src="'//'+item.picUrl"/>{{item.goodsName}}</p>
-                                <van-stepper v-model="item.num" theme="round" min="0"
+                                <van-stepper v-model="item.num" theme="round" min="0" disable-input
                                              @plus="plus(item,'1')" @minus="minus(item,'1')"
                                              button-size="18"/>
                             </div>

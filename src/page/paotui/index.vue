@@ -183,8 +183,8 @@
                             orderNumber:res.body.orderId,
                             type:2
                         }).then(res=>{
-                            //window.open(res.body.url)
-                            axios.post(res.body.url)
+                            window.location.href=res.body.url
+                            //axios.post(res.body.url)
                         })
                     }else{
                         Toast(res.msg);
