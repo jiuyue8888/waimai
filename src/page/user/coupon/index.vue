@@ -12,7 +12,7 @@
 					<div class="van-coupon" v-for="(item,id) in coupons">
 
 						<div class="top">
-							<img :src="'//'+item.logo">
+							<img :src="item.logo">
 							<p>
 								{{item.shopName}}<br>
 								<span>{{item.startDate}}-{{item.endDate}}</span>
@@ -34,7 +34,7 @@
 					<div class="van-coupon" v-for="(item,id) in disabledCoupons">
 
 						<div class="top">
-							<img :src="'//'+item.logo">
+							<img :src="item.logo">
 							<p>
 								{{item.shopName}}<br>
 								<span>{{item.startDate}}-{{item.endDate}}</span>

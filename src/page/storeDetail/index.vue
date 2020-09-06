@@ -29,7 +29,7 @@
 
                 </template>
                 <template #right-icon>
-                    <img :src="'//'+detail.logo" width="60" height="60">
+                    <img :src="detail.logo" width="60" height="60">
                 </template>
             </van-cell>
 
@@ -54,7 +54,7 @@
 
                                     :title="item.name"
 
-                                    :thumb="'//'+item.pigUrl"
+                                    :thumb="item.pigUrl"
                             >
                                 <template #tags>
                                     <span style="margin-top: 10px;display: block;">月售{{item.stockNum}} 好评100%</span>
@@ -71,7 +71,7 @@
                     <van-action-sheet v-model="show" title="购物车列表">
                         <div class="content">
                             <div v-for="(item,id) in shopCarList" :key="id" v-show="item.num>0">
-                                <p><img :src="'//'+item.picUrl"/>{{item.goodsName}}</p>
+                                <p><img :src="item.picUrl"/>{{item.goodsName}}</p>
                                 <van-stepper v-model="item.num" theme="round" min="0" disable-input
                                              @plus="plus(item,'1')" @minus="minus(item,'1')"
                                              button-size="18"/>
@@ -89,7 +89,7 @@
                     <div class="pingjia">
                         <p>(100%好评)</p>
                         <dl v-for="(item,id) in pj" :key="id">
-                            <dt><img :src="'//'+item.userInfoAvatar"></dt>
+                            <dt><img :src="item.userInfoAvatar"></dt>
                             <dd>
                                 <h3><span>{{item.nickName}}</span><em>{{item.appDate}}</em></h3>
                                 <van-rate v-model="item.dicId" size="16"/>

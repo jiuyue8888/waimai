@@ -22,7 +22,7 @@
                     :price="item.price"
                     :desc="描述信息"
                     :title="item.goodsName"
-                    :thumb="'//'+item.shoplogo"
+                    :thumb="item.shoplogo"
             />
 
             <div v-show="false">

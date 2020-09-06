@@ -13,11 +13,11 @@
                         path:'/fdetail',
                         query:{id:item.id}
                     })">
-                        <img :src="'//'+item.pic">
+                        <img :src="item.pic">
                         <h3>{{item.intro}}</h3>
                         <p>
                     <span>
-                        <img :src="'//'+item.logo">
+                        <img :src="item.logo">
                         <i>{{item.name}}</i>
                     </span>
                             <span>

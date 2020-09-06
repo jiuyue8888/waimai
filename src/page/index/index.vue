@@ -20,7 +20,7 @@
             type:item.urlType
             }
             })">
-                <img :src="'//'+item.icon"/>
+                <img :src="item.icon"/>
                 <div class="tit">
                     <span>{{item.name}}</span>
                 </div>
@@ -38,7 +38,7 @@
             type:item.urlType
             }
             })">
-                    <img :src="'//'+item.bannerUrl" class="loaded"/>
+                    <img :src="item.bannerUrl" class="loaded"/>
                 </van-swipe-item>
             </van-swipe>
 
@@ -57,8 +57,8 @@
             type:item.urlType
             }
             })">
-                    <img :src="'//'+item.disPic"/>
-                    <div class="imgtitle"><img :src="'//'+item.shopLogo">
+                    <img :src="item.disPic"/>
+                    <div class="imgtitle"><img :src="item.shopLogo">
                         <span>{{item.shopName}}</span></div>
                     <div class="content">根据您看过的店推荐</div>
                 </div>
@@ -83,7 +83,7 @@
                     <p>{{item.baseName}}</p>
                     <span>{{item.orgName}}</span>
                 </div>
-                <img :src="'//'+item.bannerUrl">
+                <img :src="item.bannerUrl">
             </li>
 
         </ul>

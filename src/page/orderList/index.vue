@@ -43,7 +43,8 @@
         },
         data() {
             return {
-                isLogin: false,
+                isLogin:sessionStorage.getItem("tel")!==''&&sessionStorage.getItem("tel")!==null&&
+                    sessionStorage.getItem("tel")!==undefined,
                 selectName: '',
                 active: 0,
                 list: ['全部', '待支付', '待接单', '派单中', '已完成'],
@@ -86,6 +87,10 @@
                 return value;
             },
             getList(id) {
+                if(!this.isLogin){
+                    Toast('请登陆')
+                    return;
+                }
                 getOrderListByOrderState({
                     userId: sessionStorage.getItem('id'),
                     orderState: id > 1 ? id + 1 : id,

@@ -9,7 +9,7 @@
                 @click="$router.push({path:'/storeDetail',query:{id:item.shopId}})">
                     <van-card
                             :title="item.shopName"
-                            :thumb="'//'+item.shopLogo"
+                            :thumb="item.shopLogo"
                     >
 
                         <template #tags>

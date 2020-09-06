@@ -34,7 +34,7 @@ export default {
   }
   .van-pull-refresh__track,
   .van-swipe__track{
-    height: auto;
+    height: auto!important;
   }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
