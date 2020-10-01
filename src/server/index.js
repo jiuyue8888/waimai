@@ -1,5 +1,5 @@
 import axios from 'axios';
-const url = 'http://www.suda60.com/';
+const url = 'http://www.jiaxinnetwork.com/';
 
 const postData=(_url,data)=>{
 
